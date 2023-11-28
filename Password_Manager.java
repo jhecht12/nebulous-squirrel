@@ -27,7 +27,9 @@ public class Password_Manager
 		passwords = new TreeMap<String, String>();
 		users = new TreeMap<String, String>();
 	}
-	
+
+	// Initializes password generator. If given username is in user list, asks for password and 
+	// then reads password list from user file into password. Otherwise, creates new user and asks user to create master password.
 	public void initialize()
 	{
 		boolean a = false;
@@ -66,7 +68,8 @@ public class Password_Manager
 		}
 		readPasswords(passwords_File);
 	}
-	
+
+	// Creates map of users and passwords from the userdata file.
 	private void readUsers(File x)
 	{
 		try
@@ -83,7 +86,10 @@ public class Password_Manager
 			
 		}
 	}
-	
+
+	// Creates map of account passwords for the user from user file. 
+	// Passwords are stored in a tree map with sites as keys and
+	// passwords as values
 	private void readPasswords(File x)
 	{
 		try
@@ -100,7 +106,9 @@ public class Password_Manager
 			
 		}
 	}
-	
+
+	// Retrieves a file with the parameter name.
+	// If file does not already exist, a new file is created
 	private File getFile(String name)
 	{
 		File f = new File(name);
@@ -117,7 +125,10 @@ public class Password_Manager
 		}
 		return f;
 	}
-	
+
+	// Generates a password of the given length using characters from the 
+	// parameter string. String will be list of all characters with or
+	// without special characters !,?,etc
 	private String genPassword(int length, String chars)
 	{
 		String newPass = "";
@@ -130,7 +141,9 @@ public class Password_Manager
 		}
 		return newPass;
 	}
-	
+
+	// Writes a new password to the user's file and adds to the current password
+	// map, used to add user created passwords
 	private void addPassword(String name, String pass)
 	{
 		try
@@ -145,7 +158,10 @@ public class Password_Manager
 		}
 		passwords.put(name, pass);
 	}
-	
+
+	// Writes a new password to the user's file and adds to the current password
+	// map, used to add generated passwords, length specifies # of char, special
+	// specifies whether special characters are to be used
 	private void addPassword(String name, int length, boolean special)
 	{
 		
@@ -171,12 +187,14 @@ public class Password_Manager
 		passwords.put(name, newPass);
 		System.out.print("\n" + newPass);
 	}
-	
+
+	// Returns the password for the parameter account from the Tree Map
 	public String getPassword(String name)
 	{
 		return passwords.get(name);
 	}
-	
+
+	// Returns a list of all passwords for the user
 	public String toString()
 	{
 		String sum = "";
@@ -186,7 +204,14 @@ public class Password_Manager
 		}
 		return sum;
 	}
-	
+
+	// Function used to continuously run password manager until user chooses to exit.
+	// User has choice to either add new password, get password, get all passwords, or quit.
+	// If user chooses to add, they are prompted to create their own password or have one generated.
+	// If user chooses to generate they are prompted for length of password and whether to include
+	// special characters. Once password is entered or generated, it is added to the user file and password map
+	// If user chooses to get a password, they are prompted for the account and the associated password
+	// is printed out if found. If user chooses to get all, all accounts and passwords are printed line by line.
 	public void execute()
 	{
 		boolean cont = true;
@@ -261,7 +286,7 @@ public class Password_Manager
 			}
 		}
 	}
-	
+
 	public static void main(String[] args)
 	{
 		Scanner uin = new Scanner(System.in);
